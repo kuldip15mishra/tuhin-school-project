@@ -4,43 +4,262 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interface for Almaconnect</title>
-    <link rel="stylesheet" href="Interface.css" </head>
+    <title>Chat Wireframe with Active Users</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+        }
+
+        /* LEFT PANEL: Active Users */
+        .users-list {
+            width: 200px;
+            border-right: 1px solid #ccc;
+            background-color: #f1f1f1;
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+            box-sizing: border-box;
+            overflow-y: auto;
+        }
+
+        .users-list h3 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .user {
+            padding: 8px;
+            margin-bottom: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #e0e0e0;
+        }
+
+        .user.active {
+            background-color: #4caf50;
+            color: #fff;
+        }
+
+        /* RIGHT PANEL: Chat */
+        .chat-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            border-top: 1px solid #ccc;
+            border-bottom: 1px solid #ccc;
+            overflow-y: auto;
+            padding: 10px;
+            background-color: #f9f9f9;
+        }
+
+        .date-separator {
+            text-align: center;
+            margin: 10px 0;
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .message {
+            max-width: 60%;
+            padding: 8px 12px;
+            margin: 5px 0;
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .message.alumni {
+            background-color: #e0f7fa;
+            align-self: flex-start;
+        }
+
+        .message.student {
+            background-color: #c8e6c9;
+            align-self: flex-end;
+        }
+
+        .timestamp {
+            font-size: 0.7em;
+            color: #888;
+            margin-left: 5px;
+        }
+
+        .input-bar {
+            display: flex;
+            padding: 10px;
+            border-top: 1px solid #ccc;
+            background-color: #fff;
+        }
+
+        .input-bar input {
+            flex: 1;
+            padding: 8px;
+            border-radius: 20px;
+            border: 1px solid #ccc;
+            outline: none;
+        }
+
+        .input-bar button {
+            margin-left: 10px;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 20px;
+            background-color: #4caf50;
+            color: #fff;
+            cursor: pointer;
+        }
+    </style>
+</head>
 
 <body>
-    <h2>Interface page</h2>
-    <h3>Calendar for 2025-2026</h3>
-    <ul>
-        <li>Digital SAT
-            <ul>
-                <li>September 19 2025</li>
-                <li>October 24 2025</li>
-                <li>November 21 2025</li>
-                <li>Febuary 27 2025</li>
-            </ul>
-        </li>
-        <li> Digital PSAT/NMSQT
-            <ul>
-                <li>Testing Window: October 1-31 2025</li>
-                <li>Saturday option: October 11 2025</li>
-            </ul>
-        </li>
-        <li>Digital PSAT 10
-            <ul>
-                <li>Testing window: March 2 - April 30 2026</li>
-            </ul>
-        </li>
-        <li>Digital PSAT 8/9
-            <ul>
-                <li>First testing window: October 1-31 2025</li>
-                <li>Second testing window: March 2 - April 30 2026</li>
-            </ul>
-        </li>
-    </ul>
-    <div class="button-box">
-        <h4>Connections</h4>
-        <button>Connect to General directory</button>
+
+    <!-- LEFT PANEL: Active Users -->
+    <div class="users-list">
+        <h3>Active Users</h3>
+        <div id="users"></div>
     </div>
+
+    <!-- RIGHT PANEL: Chat -->
+    <div class="chat-panel">
+        <div class="chat-container" id="chat">
+            <div class="date-separator">— Today —</div>
+        </div>
+
+        <!-- MESSAGE INPUT BAR -->
+        <div class="input-bar">
+            <button>+ Attach</button>
+            <input type="text" placeholder="Type a message…" id="messageInput">
+            <button id="sendBtn">Send ►</button>
+        </div>
+    </div>
+
+    <script>
+        const currentUserId = localStorage.getItem('userId'); // Logged-in user ID
+        const urlprod = "https://tuhin-school-project.onrender.com/api/users";
+
+        const urldev = "http://localhost:3000/api/users"; // change to prod if needed
+        const chatContainer = document.getElementById('chat');
+        const messageInput = document.getElementById('messageInput');
+        const sendBtn = document.getElementById('sendBtn');
+        const prodmessagesUrl = "https://tuhin-school-project.onrender.com/api/messages"; // change to prod if needed
+        const devMessageUrl = "http://localhost:3000/api/messages";
+
+        // Redirect if user is not logged in
+        if (!currentUserId) {
+            alert('Please login first');
+            window.location.href = '/login.html';
+        }
+        // Load all messages
+        async function loadMessages() {
+            try {
+                const res = await fetch(prodmessagesUrl);
+                if (!res.ok) throw new Error('Failed to fetch messages');
+
+                const messages = await res.json();
+                chatContainer.innerHTML = ''; // clear existing messages
+
+                let currentDate = '';
+                messages.forEach(msg => {
+                    const msgDate = new Date(msg.createddate).toDateString();
+                    console.log("test", msgDate)
+                    if (msgDate !== currentDate) {
+                        const separator = document.createElement('div');
+                        separator.className = 'date-separator';
+                        separator.textContent = `— ${msgDate} —`;
+                        chatContainer.appendChild(separator);
+                        currentDate = msgDate;
+                    }
+
+                    const msgDiv = document.createElement('div');
+                    msgDiv.className = 'message ' + (msg.type === 'alumni' ? 'alumni' : 'student');
+
+                    // Display name before @ if email exists
+                    let displayName = msg.email || msg.name;
+                    if (displayName.includes('@')) displayName = displayName.split('@')[0];
+
+                    msgDiv.innerHTML = `<strong>${displayName}:</strong> ${msg.message} 
+                <span class="timestamp">${new Date(msg.createddate).toLocaleTimeString()}</span>`;
+                    chatContainer.appendChild(msgDiv);
+                });
+
+                // Scroll to bottom
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+
+            } catch (err) {
+                console.error('Error loading messages:', err);
+            }
+        }
+
+        // Send message
+        sendBtn.addEventListener('click', async () => {
+            const message = messageInput.value.trim();
+            if (!message) return;
+
+            try {
+                await fetch(devMessageUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ user_id: currentUserId, message })
+                });
+
+                messageInput.value = '';
+                loadMessages(); // refresh chat
+            } catch (err) {
+                console.error('Error sending message:', err);
+            }
+        });
+
+        // Auto-refresh messages every 5 seconds
+        setInterval(loadMessages, 5000);
+        // Function to fetch and render active users
+        async function loadUsers() {
+            try {
+                const res = await fetch(urlprod);
+                if (!res.ok) throw new Error('Failed to fetch users');
+
+                const users = await res.json();
+                const usersDiv = document.getElementById('users');
+                usersDiv.innerHTML = '';
+
+                users.forEach(user => {
+                    const div = document.createElement('div');
+                    div.className = 'user' + (user.status === 'active' ? ' active' : '');
+
+                    // Show only the part of email before '@'
+                    let displayName = user.email || user.name;
+                    if (displayName.includes('@')) {
+                        displayName = displayName.split('@')[0];
+                    }
+
+                    div.textContent = displayName;
+                    usersDiv.appendChild(div);
+                });
+            } catch (err) {
+                console.error('Error loading users:', err);
+            }
+        }
+
+        // Load users on page load
+        // Load messages on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            loadUsers();
+            loadMessages();
+        });
+
+        // Optional: refresh users every 10s
+        setInterval(loadUsers, 5000);
+    </script>
+
 </body>
 
 </html>

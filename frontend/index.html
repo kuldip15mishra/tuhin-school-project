@@ -65,6 +65,7 @@
                     document.getElementById("result").style.color = "green";
                     document.getElementById("result").innerText = "Login successful! Welcome " + data.email;
                     // Login successful → redirect
+                    localStorage.setItem('userId', data.id);
                     window.location.href = "User-interface.html"; // 
                     // Redirect to dashboard if needed
                     // window.location.href = "dashboard.html";
