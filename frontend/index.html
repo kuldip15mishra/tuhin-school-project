@@ -46,12 +46,13 @@
     <script>
         document.getElementById("loginForm").addEventListener("submit", async (e) => {
             e.preventDefault();
-
+            const urlprod = "https://tuhin-school-project.onrender.com/api/login";
+            const urldev = "http://localhost:3000/api/login";
             const email = document.getElementById("email").value;
             const password = document.getElementById("password").value;
 
             try {
-                const response = await fetch("http://localhost:3000/api/login", {
+                const response = await fetch(urlprod, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ email, password })

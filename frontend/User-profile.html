@@ -53,7 +53,8 @@
     <script>
         document.getElementById("registerForm").addEventListener("submit", async (e) => {
             e.preventDefault();
-
+            const urlprod = "https://tuhin-school-project.onrender.com/api/register";
+            const urldev = "http://localhost:3000/api/register";
             const data = {
                 email: document.getElementById("email").value,
                 password: document.getElementById("password").value,
@@ -61,7 +62,7 @@
                 status: document.getElementById("status").checked ? "active" : "inactive"
             };
 
-            const response = await fetch("http://localhost:3000/api/register", {
+            const response = await fetch(urlprod, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(data)
