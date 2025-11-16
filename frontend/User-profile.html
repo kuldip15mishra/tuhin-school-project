@@ -1,34 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User profile creation for Almaconnect</title>
     <link rel="stylesheet" href="User.css">
 </head>
+
 <body>
     <section>
-    <div class="registeration">
-        <form action="register">
-            <h2>Registeration</h2>
-            <div class="input-box">
-                <span class="icon"><ion-icon name="mail"></ion-icon></span>
-                <input type="text" required>
-                <label>Course</label>
-            </div>
-            <div class="input-box">
-                <span class="icon"><ion-icon name="mail"></ion-icon></span>
-                <input type="text" required>
-                <label>Student/Alumnus</label>
-            </div>
-            <div class="remember-forgot">
-                <label><input type="checkbox">Registered</label>
-            </div>
-            <button type="submit">Login</button>
-        </form>
-    </div>
+        <div class="registeration">
+            <form id="registerForm">
+                <h2>Registration</h2>
+
+                <!-- Email -->
+                <div class="input-box">
+                    <span class="icon"><ion-icon name="mail"></ion-icon></span>
+                    <input type="email" id="email" required>
+                    <label>Email</label>
+                </div>
+
+                <!-- Password -->
+                <div class="input-box">
+                    <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
+                    <input type="password" id="password" required>
+                    <label>Password</label>
+                </div>
+
+                <!-- User Type -->
+                <div class="input-box">
+                    <span class="icon"><ion-icon name="person"></ion-icon></span>
+                    <input type="text" id="type" required>
+                    <label>Student / Alumni</label>
+                </div>
+
+                <div class="remember-forgot">
+                    <label><input type="checkbox" id="status"> Active User</label>
+                </div>
+
+                <button type="submit">Register</button>
+
+                <p id="result" style="color: red; margin-top: 10px;"></p>
+            </form>
+        </div>
     </section>
+
+    <!-- Ionicons -->
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons.js"></script>
+
+    <script>
+        document.getElementById("registerForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const data = {
+                email: document.getElementById("email").value,
+                password: document.getElementById("password").value,
+                type: document.getElementById("type").value,
+                status: document.getElementById("status").checked ? "active" : "inactive"
+            };
+
+            const response = await fetch("http://localhost:3000/api/register", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data)
+            });
+
+            const result = await response.json();
+            document.getElementById("result").innerText = result.message;
+        });
+    </script>
 </body>
+
 </html>
