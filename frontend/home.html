@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wireframe Layout</title>
+<style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f8f8f0;
+    color: #333;
+  }
+
+  /* Header */
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #4d6d6d; /* greenish tone */
+    color: #fff;
+    padding: 15px 20px;
+  }
+
+  header h1 {
+    margin: 0;
+    font-size: 20px;
+    letter-spacing: 1px;
+  }
+
+  .header-buttons button {
+    margin-left: 10px;
+    padding: 8px 16px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    color: #333;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+
+  /* Main Content */
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 40px;
+    gap: 40px;
+  }
+
+  .placeholder-box {
+    width: 300px;
+    height: 300px;
+    border: 2px solid #4d6d6d;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+  }
+
+  .placeholder-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures image fills the box */
+  }
+
+
+
+  .text-lines {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 40px;
+  }
+
+  .line {
+    width: 200px;
+    height: 8px;
+    background-color: #ccc;
+    border-radius: 4px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>ALMACONNECT</h1>
+  <div class="header-buttons">
+    <a href="chatroom.html"><button>Chatroom</button></a>
+    <a href="calendar.html"><button>See Events</button></a>
+  </div>
+</header>
+
+<div class="container">
+  <div class="placeholder-box"> <img src="hero.jpg" alt="Placeholder Image">
+</div>
+  <div class="text-lines">
+    <div >AlmaConnect is a vibrant platform that brings students and alumni together through seamless, real-time conversations. </div>
+    <div >Whether you’re seeking mentorship, sharing experiences, exploring career guidance, or simply strengthening your school community,  </div>
+    <div >AlmaConnect makes it easy to connect, learn, and grow—anytime, anywhere.</div>
+  </div>
+</div>
+  <script>
+        const currentUserId = localStorage.getItem('userId'); // Logged-in user ID
+        const urlprod = "https://tuhin-school-project.onrender.com/api/users";
+
+        const urldev = "http://localhost:3000/api/users"; // change to prod if needed
+        const chatContainer = document.getElementById('chat');
+        const messageInput = document.getElementById('messageInput');
+        const sendBtn = document.getElementById('sendBtn');
+        const prodmessagesUrl = "https://tuhin-school-project.onrender.com/api/messages"; // change to prod if needed
+        const devMessageUrl = "http://localhost:3000/api/messages";
+
+        // Redirect if user is not logged in
+        if (!currentUserId) {
+            alert('Please login first');
+            window.location.href = '/login.html';
+        }
+    
+      
+    </script>
+</body>
+</html>

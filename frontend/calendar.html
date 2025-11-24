@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.19/index.global.min.js'></script>
+     <script>
+
+      document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+    initialView: 'dayGridMonth',
+    events: [ // Example events
+      
+  { title: 'May eAssessment Session - Written exams', start: '2025-05-01', end: '2025-05-01', description: 'Written exams for eAssessment' },
+  { title: 'May eAssessment Session - On-screen exams', start: '2025-05-08', end: '2025-05-08', description: 'On-screen exams for eAssessment' },
+
+  { title: 'On-screen exams', start: '2025-11-03', end: '2025-11-03', description: 'November on-screen exams' },
+
+  { title: 'Project Launch / Proposal Approval', start: '2025-06-08', end: '2025-06-08', description: 'Project Launch and Proposal Approval' },
+
+  { title: 'Checkpoint 1 (Process Journal Review)', start: '2025-08-03', end: '2025-08-03', description: 'First checkpoint review' },
+
+  { title: 'Checkpoint 2 (Draft Submission)', start: '2025-10-05', end: '2025-10-05', description: 'Second checkpoint draft submission' },
+
+  { title: 'Final Personal Project Report Submission', start: '2025-01-23', end: '2025-01-23', description: 'Submit final report' },
+
+  { title: 'Personal Project Exhibition', start: '2025-02-18', end: '2025-02-18', description: 'Exhibition of personal projects' },
+
+  { title: 'Mid-Year Exams', start: '2025-12-03', end: '2025-12-03', description: 'Mid-year examinations' },
+
+  { title: 'Mock eAssessments / Pre-Boards', start: '2025-02-24', end: '2025-02-24', description: 'Mock eAssessments and Pre-Boards' },
+
+  { title: 'Final MYP Exams (school-based)', start: '2025-04-15', end: '2025-04-15', description: 'School-based final exams' },
+
+  { title: 'Subject Selection Guidance for DP', start: '2025-01-05', end: '2025-01-05', description: 'DP subject combinations and HL/SL advice' },
+
+  { title: 'One-on-One DP Subject Counseling', start: '2025-02-05', end: '2025-02-05', description: 'Individual counseling for DP subjects' },
+
+  { title: 'Career Aptitude & Interest Tests', start: '2025-10-03', end: '2025-10-03', description: 'Career aptitude and interest testing' },
+
+  { title: 'University Awareness Sessions (India & Abroad)', start: '2025-10-16', end: '2025-10-16', description: 'University awareness sessions' },
+
+  { title: 'Meet-the-Alumni Career Webinar', start: '2025-09-12', end: '2025-09-12', description: 'Career webinar with alumni' },
+
+  { title: 'CAS Introduction for Future DP Students', start: '2025-04-04', end: '2025-04-04', description: 'Introduction to CAS for DP students' },
+
+  { title: 'MYP Community Project Workshops', start: '2025-07-12', end: '2025-07-12', description: 'Workshops for community projects' },
+
+  { title: 'Portfolio Checks (Arts, Design, PHE)', start: '2025-10-20', end: '2025-10-20', description: 'Portfolio checks for Arts, Design, PHE' },
+  { title: 'Portfolio Checks (Arts, Design, PHE)', start: '2025-02-01', end: '2025-02-01', description: 'Portfolio checks for Arts, Design, PHE' },
+
+  { title: 'Digital Learning Folio Submissions', start: '2025-12-17', end: '2025-12-17', description: 'Submit digital learning folio' },
+  { title: 'Digital Learning Folio Submissions', start: '2025-03-14', end: '2025-03-14', description: 'Submit digital learning folio' },
+
+  { title: 'Parent–Teacher Conference (PTC 1)', start: '2025-08-07', end: '2025-08-07', description: 'First parent-teacher conference' },
+  { title: 'Parent–Teacher Conference (PTC 2)', start: '2025-12-14', end: '2025-12-14', description: 'Second parent-teacher conference' },
+  { title: 'Parent–Teacher Conference (PTC 3)', start: '2025-03-06', end: '2025-03-06', description: 'Third parent-teacher conference' },
+
+  { title: 'Sports Day / Athletics Meet', start: '2025-02-28', end: '2025-02-28', description: 'Annual sports day' },
+
+  { title: 'Service as Action Project Milestones Review', start: '2025-01-31', end: '2025-01-31', description: 'Review milestones for Service as Action project' },
+
+  { title: 'Field Trips / Experiential Learning Visits', start: '2025-10-29', end: '2025-10-31', description: 'Field trips and experiential learning visits' }
+]
+
+
+      // Add more events here
+    ,
+    eventClick: function(info) {
+      // Display event details in a popup or separate area
+      alert('Event: ' + info.event.title + '\nDetails: ' + info.event.extendedProps.description);
+    }
+  });
+  calendar.render();
+      });
+
+    </script>
+  <title>Calendar Page</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f8f8f0;
+      color: #2f5d5d;
+    }
+
+      /* Header */
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #4d6d6d; /* greenish tone */
+    color: #fff;
+    padding: 15px 20px;
+  }
+
+  header h1 {
+    margin: 0;
+    font-size: 20px;
+    letter-spacing: 1px;
+  }
+
+  .header-buttons button {
+    margin-left: 10px;
+    padding: 8px 16px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    color: #333;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+
+
+    /* Main Section */
+    .month {
+      background-color: #2f5d5d;
+      color: #fff;
+      text-align: center;
+      padding: 40px 0;
+      font-size: 36px;
+      font-weight: bold;
+    }
+
+    /* Calendar */
+    .calendar {
+      width: 90%;
+      max-width: 500px;
+      margin: 20px auto;
+      border-collapse: collapse;
+      text-align: center;
+    }
+
+    .calendar th {
+      font-weight: normal;
+      padding: 10px;
+      border-bottom: 1px solid #2f5d5d;
+    }
+
+    .calendar td {
+      padding: 15px;
+    }
+
+    .calendar tr:not(:last-child) td {
+      border-bottom: 1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>ALMACONNECT</h1>
+    <div class="header-buttons">
+      <a href="chatroom.html"></a><button>chatroom</button>
+      <a href="home.html"><button>Home</button></a>
+    </div>
+  </header>
+ <div id='calendar'></div>
+   <script>
+        const currentUserId = localStorage.getItem('userId'); // Logged-in user ID
+        const urlprod = "https://tuhin-school-project.onrender.com/api/users";
+
+        const urldev = "http://localhost:3000/api/users"; // change to prod if needed
+        const chatContainer = document.getElementById('chat');
+        const messageInput = document.getElementById('messageInput');
+        const sendBtn = document.getElementById('sendBtn');
+        const prodmessagesUrl = "https://tuhin-school-project.onrender.com/api/messages"; // change to prod if needed
+        const devMessageUrl = "http://localhost:3000/api/messages";
+
+        // Redirect if user is not logged in
+        if (!currentUserId) {
+            alert('Please login first');
+            window.location.href = '/login.html';
+        }
+    
+      
+    </script>
+</body>
+</html>
+
+
